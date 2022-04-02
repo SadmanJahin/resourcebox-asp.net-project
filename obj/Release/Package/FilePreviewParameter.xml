@@ -1,0 +1,13 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<parameters>
+  <parameter name="IIS Web Application Name" description="" value="ResourceBox20210328093539" tags="IisApp">
+    <parameterEntry kind="ProviderPath" scope="IisApp" match="^C:\\Users\\Sadman\\Desktop\\merge\\ResourceBox\\obj\\Release\\Package\\PackageTmp$" />
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Sadman\\Desktop\\merge\\ResourceBox\\obj\\Release\\Package\\PackageTmp$" />
+  </parameter>
+  <parameter name="Add write permission to App_Data Folder" description="Add write permission to App_Data folder" value="ResourceBox20210328093539/App_Data" tags="Hidden">
+    <parameterEntry kind="ProviderPath" scope="setAcl" match="^C:\\Users\\Sadman\\Desktop\\merge\\ResourceBox\\obj\\Release\\Package\\PackageTmp\\App_Data$" />
+  </parameter>
+  <parameter name="userContext-Web.config Connection String" description="userContext Connection String used in web.config by the application to access the database." value="Data Source=(LocalDB)\MSSQLLocalDB;AttachDbFilename=C:\Users\Sadman\source\repos\ResourceBox\App_Data\ResourceBox.mdf;Integrated Security=True" tags="SqlConnectionString">
+    <parameterEntry kind="XmlFile" scope="C:\\Users\\Sadman\\Desktop\\merge\\ResourceBox\\obj\\Release\\Package\\PackageTmp\\Views\\Web\.config$" match="/configuration/connectionStrings/add[@name='userContext']/@connectionString" />
+  </parameter>
+</parameters>

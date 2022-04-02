@@ -1,0 +1,169 @@
+﻿
+@{
+    ViewBag.Title = "UserSettings";
+}
+@model ResourceBox.Models.ViewModel
+
+<link rel="stylesheet" href="~/Content/profile-settings.css" />
+<link rel="stylesheet" href="~/Content/animate.css" />
+@foreach (var user in Model.Users.Where(i => i.userId == Convert.ToInt32(Session["userId"])))
+{
+    <div class="container c homeText" id="settingsContainer">
+        <div class="row">
+            <div class="col-md-1"></div>
+            <div class="col-md-11">
+                <form class="f mt-5" id="updateForm" action="@Url.Action("UserSettings","User")" method="post" enctype="multipart/form-data">
+                    <h1 class="text-center mb-5">Profile Settings</h1>
+                    <div class="row">
+                        <div class="col-md-12 mt-3 mb-1"><h2 class="text-center">Profile Picture</h2></div>
+                        <div class="col-md-12 text-center imageContainer">
+                            <img id="proPic" src="@Url.Content(user.image)" alt="Avatar" class="image rounded-circle">
+                            <div class="overlay">
+                                <a href="#!" onclick="updatePicture()" class="icon text-decoration-none text-white" title="User Profile">
+                                    <i class="fa fa-user"></i>
+                                    <p class="h5">Update Profile Pic</p>
+                                </a>
+                            </div>
+                        </div>
+                        <div class="col-md-12 text-center">
+                            <button class="btn btn-secondary btn-lg" type="button" id="uploadButton" onclick="uploading()" style="display: none;margin-top:150px;">Upload</button>
+                            <div id="progress" class="progress mt-5" style="display:none;height:25px;">
+                                <div id="progress-bar" class="progress-bar progress-bar-striped progress-bar-animated bg-secondary" style="width:0%;"></div>
+                            </div>
+                        </div>
+                        <div class="col-md-12 mt-5 mb"><h2 class="text-center">User Details</h2></div>
+                        <div class="col md-6">
+                            <div class="input-group mb-3 mt-5">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text alert-primary" id="basic-addon1">Name</span>
+                                </div>
+                                <input type="text" id="name" name="name" value="@user.userName" class="form-control" placeholder="Username" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mt-4">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text alert-warning">Address</span>
+                                </div>
+                                <textarea id="address" value="" name="address" class="form-control" aria-label="With textarea">@user.address</textarea>
+                            </div>
+                            <div class="input-group mb-3 mt-5">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text alert-primary" id="basic-addon1">University</span>
+                                </div>
+                                <input type="text" value="@user.university" id="university" name="university" class="form-control" placeholder="University" aria-label="University" aria-describedby="basic-addon1">
+                            </div>
+                        </div>
+                        @{var email = @user.email.Split('@');
+                            email[1] = "@" + email[1];
+                        }
+                        <div class="col md-6">
+                            <div class="input-group mb-3 mt-5">
+                                <input type="text" id="email" name="email" value="@email[0]" class="form-control" placeholder="email" aria-label="Recipient's username" aria-describedby="basic-addon2">
+                                <div class="input-group-append">
+                                    <span class="input-group-text alert-danger" id="basic-addon2">@email[1]</span>
+                                </div>
+                            </div>
+                            <div class="input-group mb-3 mt-5">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text alert-primary" id="basic-addon1">Phone</span>
+                                </div>
+                                <input type="text" id="phone" name="phone" value="@user.phone" class="form-control" placeholder="Phone" aria-label="Username" aria-describedby="basic-addon1">
+                            </div>
+                            <div class="input-group mb-3 mt-6">
+                                <div class="input-group-prepend">
+                                    <span class="input-group-text alert-dark" id="">Current Year and Semester</span>
+                                </div>
+                                <input id="year" value="@user.year" name="year" type="number" class="form-control">
+                                <input id="semester" value="@user.semester" name="semester" type="number" class="form-control">
+                            </div>
+                        </div>
+                    </div>
+                    <input type="file" id="imageid" value="@user.image" name="image" hidden />
+                    <button id="editBtn" class="btn btn-primary btn-lg mt-2" type="button" onclick="editDetails()">Edit Profile Info</button>
+                    <button id="confirmUpdateBtn" class="btn btn-warning btn-lg mt-2" type="submit">Confirm Update</button>
+                </form>
+            </div>
+        </div>
+    </div>
+    <script src="//cdn.jsdelivr.net/npm/sweetalert2@10"></script>
+    if (user.phone == "" || user.university == "" || user.address == "")
+    {
+        <script>
+            document.getElementById("settingsContainer").classList.add("blur");
+
+            Swal.fire({
+                title: 'Welcome. Please Try To fill all the information.',
+                showClass: {
+                    popup: 'animate__animated animate__fadeInDown'
+                },
+                hideClass: {
+                    popup: 'animate__animated animate__fadeOutUp'
+                }
+            }).then(function () {
+                document.getElementById("settingsContainer").classList.remove("blur");
+            });
+        </script>
+    }
+}
+
+
+<script>
+    document.getElementById("email").readOnly = true;
+    document.getElementById("name").readOnly = true;
+    document.getElementById("address").readOnly = true;
+    document.getElementById("phone").readOnly = true;
+    document.getElementById("university").readOnly = true;
+    document.getElementById("year").readOnly = true;
+    document.getElementById("semester").readOnly = true;
+    document.getElementById("confirmUpdateBtn").disabled = true;
+
+</script>
+
+<script>
+    function editDetails() {
+        document.getElementById("editBtn").disabled = true;
+        document.getElementById("name").readOnly = false;
+        document.getElementById("phone").readOnly = false;
+        document.getElementById("address").readOnly = false;
+        document.getElementById("university").readOnly = false;
+        document.getElementById("year").readOnly = false;
+        document.getElementById("semester").readOnly = false;
+        document.getElementById("confirmUpdateBtn").style.display = "inline";
+        document.getElementById("confirmUpdateBtn").disabled = false;
+    }
+
+</script>
+<script>
+    function updatePicture() {
+        document.getElementById('imageid').click();
+    }
+
+    document.getElementById('imageid').addEventListener('change', readURL, true);
+    function readURL() {
+        var file = document.getElementById("imageid").files[0];
+        var reader = new FileReader();
+        reader.onloadend = function () {
+            document.getElementById('proPic').src = reader.result;
+            document.getElementById('uploadButton').style.display = "initial";
+
+
+        }
+        if (file) {
+            reader.readAsDataURL(file);
+        } else {
+        }
+    }
+    function uploading() {
+        var x = 0;
+        document.getElementById('progress').style.display = "flex";
+
+        setInterval(load, 100);
+        function load() {
+            var width = x.toString() + "%";
+            document.getElementById('progress-bar').style.width = width;
+            x += 10;
+            if (x == 250) {
+                document.getElementById('updateForm').submit();
+            }
+        }
+    }
+</script>
