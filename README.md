@@ -1,4 +1,4 @@
-# Resourcebox A Asp.Net Project
+# Resourcebox a Asp.Net Project
 Resourcebox is a platform for sharing resources. A registered user can share/borrow any used items.
 
 ## Features
@@ -15,5 +15,6 @@ Resourcebox is a platform for sharing resources. A registered user can share/bor
 #### ✔ FAQ Page
 #### ✔ User Dashboard
 #### ✔ Admin Panel
+
 
 Live Preview Link: http://www.resourcebox.somee.com
