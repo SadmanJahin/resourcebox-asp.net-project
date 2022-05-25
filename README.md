@@ -16,5 +16,6 @@ Resourcebox is a platform for sharing resources. A registered user can share/bor
 #### ✔ User Dashboard
 #### ✔ Admin Panel
 
+<br />
 
-Live Preview Link: http://www.resourcebox.somee.com
+### Live Preview Link: http://www.resourcebox.somee.com
