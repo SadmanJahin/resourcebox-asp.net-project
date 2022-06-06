@@ -13,6 +13,7 @@ Resourcebox is a platform for sharing resources. A registered user can share/bor
 #### ✔ Location API(Location Based Search)
 #### ✔ Map API (Show Item Location on MAP)
 #### ✔ FAQ Page
+#### ✔ Real Time Chat with Users
 #### ✔ User Dashboard
 #### ✔ Admin Panel
 
